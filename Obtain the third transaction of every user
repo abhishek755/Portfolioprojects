@@ -1,0 +1,11 @@
+-- Obtain the third transaction of every user.
+
+WITH cte as (
+SELECT user_id, spend, transaction_date,
+row_number() OVER(PARTITION BY user_id ORDER BY transaction_date) as userorder
+FROM transactions
+)
+SELECT user_id, spend, transaction_date
+FROM cte
+WHERE userorder = 3
+ORDER BY user_id
