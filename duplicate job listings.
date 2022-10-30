@@ -1,0 +1,10 @@
+--Duplicate job listings
+
+WITH cte AS (
+SELECT company_id, COUNT(job_id)
+FROM job_listings
+GROUP BY company_id
+HAVING COUNT(job_id) > 1
+)
+SELECT COUNT(*) as duplicate_companies
+FROM cte
